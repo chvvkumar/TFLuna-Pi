@@ -83,8 +83,9 @@ def main():
     # Initialize MQTT client
     mqtt_client = mqtt.Client()
     mqtt_broker = "192.168.1.250"  # Replace with your MQTT broker address
-    mqtt_port = 1883           # Replace with your MQTT broker port if different
-    mqtt_topic = "Luna"
+    mqtt_port = 1883               # Replace with your MQTT broker port if different
+    mqtt_topic_distance = "Luna/Distance"
+    mqtt_topic_time = "Luna/Time"
     
     try:
         mqtt_client.connect(mqtt_broker, mqtt_port)
@@ -111,10 +112,12 @@ def main():
             
             if distance is not None:
                 print(f"Distance: {distance} cm")
-                # Publish distance and timestamp to MQTT
+                # Publish distance to MQTT
+                publish_to_mqtt(mqtt_client, mqtt_topic_distance, str(distance))
+                
+                # Publish timestamp to MQTT
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-                message = f"Distance: {distance} cm, Time: {timestamp}"
-                publish_to_mqtt(mqtt_client, mqtt_topic, message)
+                publish_to_mqtt(mqtt_client, mqtt_topic_time, timestamp)
                 
             if strength is not None:
                 print(f"Signal Strength: {strength}")
