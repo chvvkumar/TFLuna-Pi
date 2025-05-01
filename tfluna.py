@@ -93,11 +93,7 @@ def main():
     except Exception as e:
         print(f"Error connecting to MQTT broker: {e}")
         return
-    
-    print("TF-Luna I2C Distance Measurement")
-    print("Press Ctrl+C to exit")
-    time.sleep(2)  # Give user time to see the initial message
-    
+        
     try:
         while True:
             # Read and display sensor data
