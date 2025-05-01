@@ -100,30 +100,17 @@ def main():
     
     try:
         while True:
-            clear_screen()  # Clear screen before showing new measurements
-            print("TF-Luna I2C Distance Measurement")
-            print("Press Ctrl+C to exit")
-            print("")
-            
             # Read and display sensor data
             distance = tf_luna.get_distance()
             strength = tf_luna.get_signal_strength()
             temp = tf_luna.get_temperature()
             
             if distance is not None:
-                print(f"Distance: {distance} cm")
                 # Publish distance to MQTT
                 publish_to_mqtt(mqtt_client, mqtt_topic_distance, str(distance))
-                
                 # Publish timestamp to MQTT
                 timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-                publish_to_mqtt(mqtt_client, mqtt_topic_time, timestamp)
-                
-            if strength is not None:
-                print(f"Signal Strength: {strength}")
-            if temp is not None:
-                print(f"Temperature: {temp:.2f} °C")
-                
+                publish_to_mqtt(mqtt_client, mqtt_topic_time, timestamp)       
             time.sleep(10)  # Update every 10 seconds
             
     except KeyboardInterrupt:

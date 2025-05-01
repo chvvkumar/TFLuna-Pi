@@ -1,0 +1,13 @@
+[Unit]
+Description=TF-Luna Distance Measurement Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/git/TFLuna-Pi/tfluna.py
+WorkingDirectory=/home/pi/git/TFLuna-Pi
+Restart=always
+User=pi
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
